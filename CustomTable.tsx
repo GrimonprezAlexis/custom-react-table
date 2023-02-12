@@ -1,0 +1,160 @@
+import React, { useState } from "react";
+import "./CustomTable.css";
+
+interface Props {
+  columns: { label: string; key: string }[];
+  data: { [key: string]: any }[];
+  pagination?: boolean;
+  search?: boolean;
+  sortable?: boolean;
+}
+
+const CustomTable: React.FC<Props> = (props) => {
+  const {
+    columns,
+    data,
+    pagination = true,
+    search = true,
+    sortable = true,
+  } = props;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortColumn, setSortColumn] = useState<keyof Props["data"][0] | null>(
+    null
+  );
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(
+    null
+  );
+
+  const filteredData = data.filter((row) =>
+    columns.some((column) =>
+      row[column.key]
+        .toString()
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+  );
+  const sortedData = sortable
+    ? filteredData.sort((a, b) => {
+        if (sortDirection === "asc") {
+          return a[sortColumn!] < b[sortColumn!]
+            ? -1
+            : a[sortColumn!] > b[sortColumn!]
+            ? 1
+            : 0;
+        } else {
+          return a[sortColumn!] > b[sortColumn!]
+            ? -1
+            : a[sortColumn!] < b[sortColumn!]
+            ? 1
+            : 0;
+        }
+      })
+    : filteredData;
+
+  const itemsPerPage = 10;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const entriesShown = data.slice(startIndex, endIndex);
+
+  const pages = Math.ceil(filteredData.length / itemsPerPage);
+  const currentData = sortedData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+    setCurrentPage(1);
+  };
+
+  const handleSort = (columnKey: keyof Props["data"][0]) => {
+    if (sortColumn === columnKey) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(columnKey);
+      setSortDirection("asc");
+    }
+  };
+
+  return (
+    <div className="custom-table">
+      {search && (
+        <div className="custom-table-search">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        </div>
+      )}
+      <table className="custom-table-container">
+        <thead className="custom-table-header">
+          <tr>
+            {columns.map((column, index) => (
+              <th
+                key={index}
+                className="custom-table-header-cell"
+                onClick={sortable ? () => handleSort(column.key) : undefined}
+              >
+                {column.label}
+                {sortable && sortColumn === column.key && (
+                  <span className={`sort-icon-${sortDirection}`}>
+                    {sortDirection === "asc" ? " 🔼" : " 🔽"}
+                  </span>
+                )}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="custom-table-body">
+          {currentData.map((row, index) => (
+            <tr key={index} className="custom-table-row">
+              {columns.map(({ key }, index) => (
+                <td key={index} className="custom-table-cell">
+                  {row[key]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {pagination && (
+        <div className="custom-table-pagination">
+          <span>
+            Showing {startIndex + 1} to {endIndex} of {data.length} entries
+          </span>
+
+          <div>
+            <button
+              className="custom-table-pagination-button"
+              disabled={currentPage === 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              Prev
+            </button>
+            <span className="custom-table-pagination-info">
+              Page {currentPage} of {pages}
+            </span>
+            <button
+              className="custom-table-pagination-button"
+              disabled={currentPage === pages}
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CustomTable;
