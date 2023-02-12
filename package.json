@@ -13,5 +13,19 @@
   },
   "dependencies": {
     "react": "^18.2.0"
-  }
+  },
+  "name": "agr-custom-table",
+  "description": "A custom table component built with React and TypeScript that allows for sorting, filtering, searching, and pagination of data.",
+  "version": "1.0.0",
+  "main": "./dist/CustomTable.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrimonprezAlexis/custom-react-table.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GrimonprezAlexis/custom-react-table/issues"
+  },
+  "homepage": "https://github.com/GrimonprezAlexis/custom-react-table#readme"
 }
