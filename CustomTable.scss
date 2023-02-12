@@ -5,6 +5,8 @@
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
+    justify-content: space-between;
+    padding: 0.5rem;
 
     input {
       width: 200px;
@@ -52,6 +54,7 @@
       display: flex;
       justify-content: space-between;
       margin: 1em 0;
+      padding: 0.5rem;
 
       &-button {
         width: 80px;
