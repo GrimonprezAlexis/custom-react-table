@@ -27,6 +27,7 @@ const CustomTable: React.FC<Props> = (props) => {
     null
   );
 
+  const itemsPerPage = 10;
   const filteredData = data.filter((row) =>
     columns.some((column) =>
       row[column.key]
@@ -52,12 +53,6 @@ const CustomTable: React.FC<Props> = (props) => {
         }
       })
     : filteredData;
-
-  const itemsPerPage = 10;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const entriesShown = data.slice(startIndex, endIndex);
-
   const pages = Math.ceil(filteredData.length / itemsPerPage);
   const currentData = sortedData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -125,32 +120,25 @@ const CustomTable: React.FC<Props> = (props) => {
           ))}
         </tbody>
       </table>
-
       {pagination && (
         <div className="custom-table-pagination">
-          <span>
-            Showing {startIndex + 1} to {endIndex} of {data.length} entries
+          <button
+            className="custom-table-pagination-button"
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            Prev
+          </button>
+          <span className="custom-table-pagination-info">
+            Page {currentPage} of {pages}
           </span>
-
-          <div>
-            <button
-              className="custom-table-pagination-button"
-              disabled={currentPage === 1}
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              Prev
-            </button>
-            <span className="custom-table-pagination-info">
-              Page {currentPage} of {pages}
-            </span>
-            <button
-              className="custom-table-pagination-button"
-              disabled={currentPage === pages}
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              Next
-            </button>
-          </div>
+          <button
+            className="custom-table-pagination-button"
+            disabled={currentPage === pages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </button>
         </div>
       )}
     </div>
