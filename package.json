@@ -1,31 +1,33 @@
 {
+  "name": "agr-custom-table",
+  "nameGitPackage": "@grimonprezalexis/agr-custom-table",
+  "description": "A custom table component built with React and TypeScript that allows for sorting, filtering, searching, and pagination of data.",
+  "version": "1.1.0",
+  "main": "./dist/CustomTable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel CustomTable.tsx --out-dir dist --extensions \".tsx\" --source-maps inline && npm run build:css",
     "build:css": "node-sass CustomTable.scss -o dist",
-    "copy:css": "cp CustomTable.css dist/CustomTable.css"
+    "publish": "npm run build && npm publish --access=public",
+    "publish:git": "npm run build && npm publish --access=public"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "react-super-responsive-table": "^5.2.1"
+    "node-sass": "^8.0.0"
   },
   "dependencies": {
     "react": "^18.2.0"
   },
-  "name": "agr-custom-table",
-  "description": "A custom table component built with React and TypeScript that allows for sorting, filtering, searching, and pagination of data.",
-  "version": "1.0.0",
-  "main": "./dist/CustomTable.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GrimonprezAlexis/custom-react-table.git"
+    "url": "git+https://github.com/GrimonprezAlexis/react-custom-table.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GrimonprezAlexis/custom-react-table/issues"
+    "url": "https://github.com/GrimonprezAlexis/react-custom-table/issues"
   },
-  "homepage": "https://github.com/GrimonprezAlexis/custom-react-table#readme"
+  "homepage": "https://github.com/GrimonprezAlexis/react-custom-table#readme"
 }

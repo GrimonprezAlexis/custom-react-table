@@ -37,9 +37,9 @@ const CustomTable: React.FC<Props> = (props) => {
     columns.some((column) =>
       // Check if the value of the current `row` at the `column.key` property, converted to a string and lowercased, includes the lowercased `searchTerm`
       row[column.key]
-        .toString()
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+        ?.toString()
+        ?.toLowerCase()
+        ?.includes(searchTerm.toLowerCase())
     )
   );
 
@@ -78,9 +78,7 @@ const CustomTable: React.FC<Props> = (props) => {
 
   // Define a constant named `handleSearch` that takes in a parameter `searchTerm` of type `string`
   const handleSearch = (searchTerm: string) => {
-    // Set the value of `searchTerm` to the passed in `searchTerm`
     setSearchTerm(searchTerm);
-    // Set the value of `currentPage` to 1
     setCurrentPage(1);
   };
 
