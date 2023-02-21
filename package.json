@@ -2,7 +2,7 @@
   "name": "agr-custom-table",
   "nameGitPackage": "@grimonprezalexis/agr-custom-table",
   "description": "A custom table component built with React and TypeScript that allows for sorting, filtering, searching, and pagination of data.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "./dist/CustomTable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
